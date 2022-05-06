@@ -7,6 +7,7 @@ This project implements convolutional neural networks to classify the age and ge
 
 # Dependencies
   - Python 3.6+
+
 Tested on
  - Ubuntu 18.04
  - Python 3.8.13
