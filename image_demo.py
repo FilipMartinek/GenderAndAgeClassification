@@ -3,12 +3,31 @@ import sys
 import cv2
 from tensorflow import keras
 import numpy as np
+import matplotlib.pyplot as plt
 
 
 def get_larger(a, b):
     if a >= b:
         return a
     return b
+
+def visualize_conv(Model, input, layer_name, rows, cols):
+    #get output layer
+    conv_out = Model.get_layer(layer_name).output
+
+    #create intermediate model and prediction
+    inter_model = keras.models.Model(inputs=Model.input, outputs=conv_out)
+    inter_pred = inter_model.predict(input)
+
+    i = 0
+
+    fig, ax = plt.subplots(rows, cols)
+
+    for r in range(rows):
+        for c in range(cols):
+            ax[r][c].imshow(inter_pred[0, :, :, i])
+            i += 1
+    plt.show()
 
 
 filedir = os.getcwd()
@@ -19,6 +38,14 @@ try:
     temp += 1
 except IndexError:
     print("Please give the image filename argument (e.g.: python image_face_detection.py image_path.jpg)")
+
+try:
+    if sys.argv[temp] == "v":
+        viz_convs = True
+    else:
+        raise IndexError        
+except IndexError:
+    viz_convs = False
 
 try:
     model_name = sys.argv[temp]
@@ -75,16 +102,24 @@ for (x, y, width, height) in faces:
 
     #save and process cropped image
     processed_img = image[y:(y + a), x:(x + a)]
+    cv2.imshow("win", processed_img)
     # processed_img = image[y:(y + height), x:(x + width)]
     if COLOR_TYPE == "bgr":
         processed_img = cv2.cvtColor(processed_img, cv2.COLOR_RGB2BGR)
     elif COLOR_TYPE == "bw":
         processed_img = cv2.cvtColor(processed_img, cv2.COLOR_RGB2GRAY)
     processed_img = cv2.resize(processed_img, (RES, RES))
+    processed_img = np.array([processed_img])/255.0
 
 
     #get predictions
-    pred = Model.predict(np.array([processed_img])/255.0)
+    pred = Model.predict(processed_img)
+
+    if viz_convs:
+        visualize_conv(Model, processed_img, "conv2d", 4, 8)
+        visualize_conv(Model, processed_img, "conv2d_1", 4, 16)
+        visualize_conv(Model, processed_img, "conv2d_2", 8, 16)
+        visualize_conv(Model, processed_img, "conv2d_3", 8, 32)
     age = int(np.round(pred[1][0] * 100))
     gender = int(np.round(pred[0][0]))
 
