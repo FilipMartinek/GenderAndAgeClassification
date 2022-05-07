@@ -18,7 +18,7 @@ def ConvMaxp(input_tensor, filters, kernel_size, pool_size, strides):
     return x
 
 
-def model(RES=32, COLOR_TYPE="bgr", COLORS=3, CONVS=4, CONVSTART=32, CONVMULT=2, CONVADD=0, KERNELSIZE=(3, 3), POOLSIZE=(2, 2), STRIDES=(1, 1), OUTPUTCONVS=False): #COLOR_TYPE bgr or bw
+def model(RES=32, COLOR_TYPE="bgr", COLORS=3, CONVS=4, CONVSTART=32, CONVMULT=2, CONVADD=0, KERNELSIZE=(3, 3), POOLSIZE=(2, 2), STRIDES=(1, 1)): #COLOR_TYPE bgr or bw
 
     #define inputshape and inputs
     input_shape = (RES, RES, COLORS)
@@ -59,7 +59,6 @@ def model(RES=32, COLOR_TYPE="bgr", COLORS=3, CONVS=4, CONVSTART=32, CONVMULT=2,
     
     #define the model and compile it
     outputs = [output_1, output_2]
-    if OUTPUTCONVS: outputs += convs
     model = Model(inputs=[inputs], outputs=outputs)
     model.compile(optimizer="Adam", loss=["binary_crossentropy", "mae"], metrics={"gender_out" : "accuracy", "age_out" : RootMeanSquaredError()})
     
