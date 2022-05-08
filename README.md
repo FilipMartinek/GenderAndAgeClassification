@@ -1,4 +1,4 @@
-# GenderAndAgeClassification
+# GenderAndAgeRecognition
 This project implements convolutional neural networks to classify the age and gender of a person from an image of their face. It uses Keras and Tensorflow for the neural network and OpenCV for processing the data and finding the face in the demo programs.
 
 - [Dependecies](#dependencies)
@@ -20,7 +20,7 @@ This model uses the [UTKFace](https://github.com/aicip/UTKFace) or the [IMDB_WIK
 
 # Usage
  - Download this repository
- - Open Terminal/Command Prompt in the main GenderAndAgeClassification directory
+ - Open Terminal/Command Prompt in the main GenderAndAgeRecognition directory
  - Install all the necessery libraries with:
 ```bash
 pip install -r requirements.txt
