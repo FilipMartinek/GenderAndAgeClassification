@@ -5,6 +5,8 @@ from tensorflow import keras
 import numpy as np
 
 
+UPDATE_FRAME = 5
+
 def get_larger(a, b):
     if a >= b:
         return a
@@ -44,9 +46,13 @@ if not video_input.isOpened():
     print("Unable to access the camera")
     exit()
 
+
+fram_c = UPDATE_FRAME
+
 print("Streaming started")
 #main loop
 while True:
+
     ret, image = video_input.read()
     if not(ret):
         print("Can't receive frame, quitting...")
@@ -77,10 +83,14 @@ while True:
         processed_img = cv2.resize(processed_img, (RES, RES))
 
 
-        #get predictions
-        pred = Model.predict(np.array([processed_img])/255.0)
-        age = int(np.round(pred[1][0] * 100))
-        gender = int(np.round(pred[0][0]))
+        #get predictions if the loop is at an update frame
+        if fram_c >= UPDATE_FRAME:
+            pred = Model.predict(np.array([processed_img])/255.0)
+            age = int(np.round(pred[1][0] * 100))
+            gender = int(np.round(pred[0][0]))
+            fram_c = 0
+        else:
+            fram_c += 1
 
         #print predictions above rect
         text = f"Gender: {gender_options[gender]} | Age: {age}"
