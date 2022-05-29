@@ -42,6 +42,7 @@ except IndexError:
 try:
     if sys.argv[temp] == "v":
         viz_convs = True
+        temp += 1
     else:
         raise IndexError        
 except IndexError:
