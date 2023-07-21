@@ -16,20 +16,20 @@ Tested on
  - OpenCV 4.5.5
 
 # Dataset
-This model uses the [UTKFace](https://github.com/aicip/UTKFace) or the [IMDB_WIKI](https://data.vision.ee.ethz.ch/cvl/rrothe/imdb-wiki/) datasets. These datasets have to bo saved in the datasets/ directory in order to be processed. The processed datasets are then saved to datasets/processed_data/ as .npy files.
+This model uses the [UTKFace](https://github.com/aicip/UTKFace) or the [IMDB_WIKI](https://data.vision.ee.ethz.ch/cvl/rrothe/imdb-wiki/) datasets. These datasets have to be saved in the datasets/ directory in order to be processed. The processed datasets are then saved to datasets/processed_data/ as .npy files.
 
 # Usage
  - Download this repository
  - Open Terminal/Command Prompt in the main GenderAndAgeRecognition directory
- - Install all the necessery libraries with:
+ - Install all the necessary libraries with:
 ```bash
 pip install -r requirements.txt
 ```
- - run the demo program for webcam:
+ - run the demo program for the webcam:
 ```bash
 python webcam_demo.py
 ```
- - run the demo for image 
+ - run the demo for the image 
 ```bash
 python image_demo.py <path_to_image>
 ```
